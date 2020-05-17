@@ -1,6 +1,6 @@
-package com.zblog.common.exception;
+package com.zblog.exception;
 
-import com.zblog.common.exception.enums.ErrorEnum;
+import com.zblog.common.base.enums.ErrorEnum;
 import lombok.Data;
 
 /**

@@ -1,6 +1,6 @@
 package com.zblog.common.base;
 
-import com.zblog.common.exception.enums.ErrorEnum;
+import com.zblog.common.base.enums.ErrorEnum;
 
 import java.util.HashMap;
 

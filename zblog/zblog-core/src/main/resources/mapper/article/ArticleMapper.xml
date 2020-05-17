@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zblog.mapper.article.ArticleMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zblog.pojo.article.Article">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="description" property="description" />
+        <result column="author" property="author" />
+        <result column="content" property="content" />
+        <result column="content_format" property="contentFormat" />
+        <result column="read_num" property="readNum" />
+        <result column="like_num" property="likeNum" />
+        <result column="cover_type" property="coverType" />
+        <result column="cover" property="cover" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="recommend" property="recommend" />
+        <result column="category_id" property="categoryId" />
+        <result column="publish" property="publish" />
+        <result column="top" property="top" />
+    </resultMap>
+
+    <sql id="manageArticleColumn">
+        id,title,description,author,read_num,like_num,cover,cover_type,create_time,top,publish,recommend,category_id
+    </sql>
+
+    <select id="listArticleVo" resultType="com.zblog.pojo.article.vo.ArticleVo">
+        select <include refid="manageArticleColumn"/> from article
+        <where>
+            <if test="params.title!=null and params.title !=''">
+                and title like concat('%',#{params.title},'%')
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+</mapper>

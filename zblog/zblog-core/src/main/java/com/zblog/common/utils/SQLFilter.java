@@ -1,7 +1,7 @@
 package com.zblog.common.utils;
 
-import com.zblog.common.exception.GlobalException;
-import com.zblog.common.exception.enums.ErrorEnum;
+import com.zblog.common.base.enums.ErrorEnum;
+import com.zblog.exception.GlobalException;
 import org.apache.commons.lang3.StringUtils;
 
 /**

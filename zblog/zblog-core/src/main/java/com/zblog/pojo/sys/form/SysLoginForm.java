@@ -2,6 +2,8 @@ package com.zblog.pojo.sys.form;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @ClassName SysLoginForm
  * @Description TODO
@@ -11,7 +13,9 @@ import lombok.Data;
  **/
 @Data
 public class SysLoginForm {
+    @NotNull
     private String username;
+    @NotNull
     private String password;
     private String captcha;
     private String uuid;

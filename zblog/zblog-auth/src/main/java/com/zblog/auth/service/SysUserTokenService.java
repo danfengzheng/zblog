@@ -1,13 +1,19 @@
 package com.zblog.auth.service;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zblog.common.base.Response;
 import com.zblog.common.base.constants.RedisKeyConstants;
+import com.zblog.common.utils.BCrypt;
 import com.zblog.common.utils.RedisUtils;
 import com.zblog.common.utils.TokenGenerator;
+import com.zblog.mapper.sys.SysUserMapper;
+import com.zblog.pojo.sys.SysUser;
 import com.zblog.pojo.sys.SysUserToken;
+import com.zblog.pojo.sys.form.RegisterForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 /**
@@ -19,7 +25,7 @@ import org.springframework.util.StringUtils;
  **/
 @Slf4j
 @Service
-public class SysUserTokenService {
+public class SysUserTokenService extends ServiceImpl<SysUserMapper, SysUser> {
 
 
     @Autowired
@@ -81,5 +87,12 @@ public class SysUserTokenService {
         String userIdKey = RedisKeyConstants.MANAGE_SYS_USER_TOKEN + userId;
         redisUtils.updateExpire(tokenKey);
         redisUtils.updateExpire(userIdKey);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void register(RegisterForm form){
+        form.setPassword(BCrypt.hashpw(form.getPassword(),BCrypt.gensalt()));
+        form.setStatus(1);
+        baseMapper.insert(form);
     }
 }
