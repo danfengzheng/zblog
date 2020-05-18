@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://47.92.251.247:8089/dbblog?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+    url: jdbc:mysql://47.92.251.247:8089/zblog?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
     username: root
     password: cm20@jrr
     initial-size: 10

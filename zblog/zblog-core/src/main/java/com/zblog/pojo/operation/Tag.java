@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -23,6 +25,8 @@ public class Tag implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @NotNull
+    @Size(max = 30 , min = 2 ,message = "")
     @ApiModelProperty(value = "标签名字")
     private String name;
 

@@ -37,7 +37,7 @@ public class SysLoginController {
         if(user == null || !BCrypt.checkpw(form.getPassword(),user.getPassword()) ){
             return Response.error(ErrorEnum.USERNAME_OR_PASSWORD_WRONG);
         }
-        return tokenService.createToken(1);
+        return tokenService.createToken(user.getUserId());
     }
 
     @PostMapping("/admin/sys/register")

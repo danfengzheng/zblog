@@ -4,7 +4,7 @@ server: # Tomcat
   port: 9213
 spring:
   profiles:
-    active: dev
+    active: prod
   mvc:
 
     #仅映射static资源文件
@@ -19,7 +19,7 @@ mybatis-plus:
   #mapper文件
   mapper-locations: classpath:mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  type-aliases-package: com.zblog.pojo.sys.*
+  type-aliases-package: com.zblog.pojo.*
   global-config:
     # 数据库相关配置
     db-config:
