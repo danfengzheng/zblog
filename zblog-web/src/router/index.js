@@ -49,12 +49,34 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: '首页',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
+  {
 
+    path: '/operation',
+    component: Layout,
+    redirect: '/operation/tag',
+    name: 'Operation',
+    meta: { title: 'Operation', icon: 'example' },
+    children: [
+      {
+        path: 'tag',
+        name: 'Ta1234g',
+        component: () => import('@/views/operation/tag/index'),
+        meta: { title: '标签管理', icon: 'example' }
+      },
+
+      {
+        path: 'type',
+        name: 'type',
+        component: () => import('@/views/operation/tag/index'),
+        meta: { title: 'Type', icon: 'example' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,
