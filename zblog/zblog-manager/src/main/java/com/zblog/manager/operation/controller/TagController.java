@@ -29,23 +29,23 @@ public class TagController extends AbstractController {
 
     @GetMapping
     public Response queryPage(BaseForm form) {
-        return Response.ok().put("page", tagService.queryPage(form));
+        return Response.getInstance(tagService.queryPage(form));
     }
     @PutMapping
     public Response save(@RequestBody Tag tag){
         tagService.save(tag);
-        return Response.ok();
+        return Response.getInstance();
     }
 
     @PostMapping
     public Response edit(@RequestBody Tag tag){
         tagService.updateById(tag);
-        return Response.ok();
+        return Response.getInstance();
     }
 
     @DeleteMapping
     public Response del(@RequestBody TagForm form){
         tagService.removeByIds(Arrays.asList(form.getIds()));
-        return Response.ok();
+        return Response.getInstance();
     }
 }

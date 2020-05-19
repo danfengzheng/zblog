@@ -1,6 +1,8 @@
 package com.zblog.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.common.collect.Maps;
 import com.zblog.common.base.Response;
 import com.zblog.common.base.constants.RedisKeyConstants;
 import com.zblog.common.utils.BCrypt;
@@ -15,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import springfox.documentation.spring.web.json.Json;
+
+import java.util.Map;
 
 /**
  * @ClassName SysUserTokenService
@@ -48,8 +53,10 @@ public class SysUserTokenService extends ServiceImpl<SysUserMapper, SysUser> {
         // 将token存进redis
         redisUtils.set(tokenKey, userId, EXPIRE);
         redisUtils.set(userIdKey, token, EXPIRE);
-
-        return new Response().put("token", token).put("expire", EXPIRE);
+        Map<String,Object> map = Maps.newHashMap();
+        map.put("token", token);
+        map.put("expire", EXPIRE);
+        return new Response(map);
     }
 
     public SysUserToken queryByToken(String token) {

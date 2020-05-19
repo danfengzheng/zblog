@@ -48,6 +48,6 @@ public class SysLoginController {
             return Response.error(ErrorEnum.USERNAME_ALREADY_EXISTS);
         }
         tokenService.register(form);
-        return Response.ok();
+        return Response.getInstance();
     }
 }

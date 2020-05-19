@@ -1,6 +1,7 @@
 package com.zblog.common.base;
 
 import com.zblog.common.base.enums.ErrorEnum;
+import lombok.Data;
 
 import java.util.HashMap;
 
@@ -11,13 +12,26 @@ import java.util.HashMap;
  * @Data 2020/5/16 18:36
  * @Version 1.0
  **/
-public class Response extends HashMap<String, Object> {
+@Data
+public class  Response<T> {
+    public int code;
+    public String msg ;
+    public T data;
+
     public Response() {
-        put("code", 200);
-        put("msg", "success");
+        this.code = 200;
+        this.msg = "success";
+    }
+    public Response(T t) {
+        this.code = 200;
+        this.msg = "success";
+        this.data = t;
     }
 
-    public static Response ok() {
+    public static<T> Response getInstance(T t) {
+        return new Response(t);
+    }
+    public static<T> Response getInstance() {
         return new Response();
     }
 
@@ -26,38 +40,24 @@ public class Response extends HashMap<String, Object> {
     }
 
     public static Response error(ErrorEnum eEnum) {
-        return new Response().put("code", eEnum.getCode()).put("msg", eEnum.getMsg());
+        Response response = new Response();
+        response.setCode(eEnum.getCode());
+        response.setMsg(eEnum.getMsg());
+        return response;
     }
 
     public static Response error(String msg) {
-        return new Response().put("msg",msg).put("code", ErrorEnum.SYS_ERROR.getCode());
+        Response response = new Response();
+        response.setCode(ErrorEnum.SYS_ERROR.getCode());
+        response.setMsg(msg);
+        return response;
     }
 
     public static Response error(Integer code , String msg){
-        return new Response().put("code",code).put("msg",msg);
+        Response response = new Response();
+        response.setCode(code);
+        response.setMsg(msg);
+        return response;
     }
 
-    public static Response exception() {
-        return exception(ErrorEnum.SYS_ERROR);
-    }
-
-    public static Response exception(ErrorEnum eEnum) {
-        return new Response().put("code", eEnum.getCode()).put("msg", eEnum.getMsg());
-    }
-
-
-
-    /**
-     * 封装业务数据
-     *
-     * @param key
-     * @param value
-     * @return
-     */
-    @Override
-    public Response put(String key, Object value) {
-        super.put(key, value);
-        //将HashMap对象本身返回
-        return this;
-    }
 }

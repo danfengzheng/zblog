@@ -31,7 +31,7 @@ public class SysUserController extends AbstractController {
      */
     @GetMapping("/info")
     public Response info(){
-        return Response.ok().put("user", getUser());
+        return Response.getInstance(getUser());
     }
 
     /**
@@ -42,6 +42,6 @@ public class SysUserController extends AbstractController {
         //只有超级管理员，才能查看所有管理员列表
         PageUtils page = userService.queryPage(form);
 
-        return Response.ok().put("page", page);
+        return Response.getInstance(page);
     }
 }

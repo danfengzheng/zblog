@@ -19,6 +19,6 @@ import java.util.Map;
 public class ArticleController {
 
     public Response listArticle(@RequestParam Map<String, Object> params){
-        return Response.ok();
+        return Response.getInstance();
     }
 }

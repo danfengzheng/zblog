@@ -19,10 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(GlobalException.class)
     public Response handleException(GlobalException e) {
-        Response response = new Response();
-        response.put("code",e.getCode());
-        response.put("msg",e.getMsg());
-        return response;
+        return Response.error(e.getCode(),e.getMsg());
     }
     @ExceptionHandler(IllegalArgumentException.class)
     public Response handleIllegalException(IllegalArgumentException e){
@@ -32,6 +29,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Response handleException(Exception e){
         log.error(e.getMessage(),e);
-        return Response.exception();
+        return Response.error(ErrorEnum.SYS_ERROR);
     }
 }
