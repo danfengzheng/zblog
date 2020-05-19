@@ -66,7 +66,7 @@ export const constantRoutes = [
         path: 'tag',
         name: 'Ta1234g',
         component: () => import('@/views/operation/tag/index'),
-        meta: { title: '标签管理', icon: 'example' }
+        meta: { title: '标签管理', icon: 'discount' }
       },
 
       {
