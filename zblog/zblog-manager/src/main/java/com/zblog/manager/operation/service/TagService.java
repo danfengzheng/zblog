@@ -3,6 +3,7 @@ package com.zblog.manager.operation.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zblog.common.base.BaseForm;
 import com.zblog.common.utils.PageUtils;
 import com.zblog.common.utils.Query;
 import com.zblog.mapper.operation.TagMapper;
@@ -20,8 +21,8 @@ import java.util.Map;
 @Service
 public class TagService extends ServiceImpl<TagMapper, Tag> {
 
-    public PageUtils queryPage(Map<String, Object> params) {
-        IPage<Tag> page = baseMapper.selectPage(new Query<Tag>(params).getPage()
+    public PageUtils queryPage(BaseForm form) {
+        IPage<Tag> page = baseMapper.selectPage(new Query<Tag>(form).getPage()
                 , new QueryWrapper<Tag>().lambda());
         return new PageUtils(page);
     }

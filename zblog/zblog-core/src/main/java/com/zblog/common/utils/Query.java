@@ -1,11 +1,11 @@
 package com.zblog.common.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zblog.common.base.BaseForm;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * @ClassName Query
@@ -15,7 +15,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Data
-public class Query<T> extends LinkedHashMap<String,Object> {
+public class Query<T> extends LinkedHashMap<String, Object> {
     /**
      * mybatis-plus分页参数
      */
@@ -23,27 +23,23 @@ public class Query<T> extends LinkedHashMap<String,Object> {
     /**
      * 当前页码
      */
-    private long currPage=1;
+    private long currPage = 1;
 
     /**
      * 每页条数
      */
     private int limit = 10;
-    public Query(Map<String, Object> params){
-        this.putAll(params);
+
+    public Query(BaseForm form) {
         //分页参数
-        if(params.get("page") != null){
-            currPage = Integer.parseInt((String)params.get("page"));
-        }
-        if(params.get("limit") != null){
-            limit = Integer.parseInt((String)params.get("limit"));
-        }
+        currPage = form.getCurrPage();
+        limit = form.getLimit();
         this.put("offset", (currPage - 1) * limit);
         this.put("page", currPage);
         this.put("limit", limit);
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
-        String sidx = SQLFilter.sqlInject((String)params.get("sidx"));
-        String order = SQLFilter.sqlInject((String)params.get("order"));
+        String sidx = SQLFilter.sqlInject(form.getSidx());
+        String order = SQLFilter.sqlInject(form.getOrder());
         this.put("sidx", sidx);
         this.put("order", order);
 
@@ -51,10 +47,10 @@ public class Query<T> extends LinkedHashMap<String,Object> {
         this.page = new Page<>(currPage, limit);
 
         //排序
-        if(StringUtils.isNotBlank(sidx) && StringUtils.isNotBlank(order)){
-            if ("ASC".equalsIgnoreCase(order)){
+        if (StringUtils.isNotBlank(sidx) && StringUtils.isNotBlank(order)) {
+            if ("ASC".equalsIgnoreCase(order)) {
                 this.page.setAsc(sidx);
-            }else{
+            } else {
                 this.page.setDesc(sidx);
             }
 

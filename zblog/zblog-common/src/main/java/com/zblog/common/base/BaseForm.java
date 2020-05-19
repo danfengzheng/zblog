@@ -10,6 +10,24 @@ import lombok.Data;
  */
 @Data
 public class BaseForm {
+    /**
+     * 当前页码
+     */
+    private long currPage=1;
+    /**
+     * 每页条数
+     */
+    private int limit = 10;
+    /*排序字段*/
+    private String sidx;
+    /*升序降序 ASC || DESC*/
+    private String order;
     private Integer id ;
     private String[] ids;
+
+    public void setLimit(int limit){
+        if(limit>10){
+            this.limit = limit;
+        }
+    }
 }

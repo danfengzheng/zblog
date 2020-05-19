@@ -4,6 +4,7 @@ import com.zblog.common.base.Response;
 import com.zblog.common.utils.PageUtils;
 import com.zblog.manager.sys.common.AbstractController;
 import com.zblog.manager.sys.service.SysUserService;
+import com.zblog.pojo.sys.form.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,9 +38,9 @@ public class SysUserController extends AbstractController {
      * 所有用户列表
      */
     @GetMapping("/list")
-    public Response list(@RequestParam Map<String, Object> params){
+    public Response list(UserForm form){
         //只有超级管理员，才能查看所有管理员列表
-        PageUtils page = userService.queryPage(params);
+        PageUtils page = userService.queryPage(form);
 
         return Response.ok().put("page", page);
     }

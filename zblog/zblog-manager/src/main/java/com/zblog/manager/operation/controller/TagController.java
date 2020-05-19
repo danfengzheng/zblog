@@ -1,6 +1,7 @@
 package com.zblog.manager.operation.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zblog.common.base.BaseForm;
 import com.zblog.common.base.Response;
 import com.zblog.manager.operation.service.TagService;
 import com.zblog.manager.sys.common.AbstractController;
@@ -27,8 +28,8 @@ public class TagController extends AbstractController {
     private TagService tagService;
 
     @GetMapping
-    public Response queryPage(Map<String, Object> params) {
-        return Response.ok().put("page", tagService.queryPage(params));
+    public Response queryPage(BaseForm form) {
+        return Response.ok().put("page", tagService.queryPage(form));
     }
     @PutMapping
     public Response save(@RequestBody Tag tag){
