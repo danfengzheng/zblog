@@ -33,11 +33,9 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(rest => {
-        console.log(rest)
-        const { token } = rest
-        commit('SET_TOKEN', token)
-        setToken(token)
+      login({ username: username.trim(), password: password }).then(data => {
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -48,26 +46,21 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(rest => {
-        if (!rest) {
+      getInfo(state.token).then(data => {
+        if (!data) {
           reject('Verification failed, please Login again.')
         }
-        console.log(rest)
-        const { username } = rest
-        const roles = ['admin']
-        const avatar = ''
-        const introduction = ''
+
+        const { roles, name } = data
+
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
 
         commit('SET_ROLES', roles)
-        commit('SET_NAME', username)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
-        resolve(rest)
-        console.log('Info end------------------------')
+        commit('SET_NAME', name)
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
@@ -89,7 +82,6 @@ const actions = {
 
         resolve()
       }).catch(error => {
-        console.log('error---------------------')
         reject(error)
       })
     })
@@ -112,7 +104,7 @@ const actions = {
 
       commit('SET_TOKEN', token)
       setToken(token)
-      console.log('权限代码')
+
       const { roles } = await dispatch('getInfo')
 
       resetRouter()

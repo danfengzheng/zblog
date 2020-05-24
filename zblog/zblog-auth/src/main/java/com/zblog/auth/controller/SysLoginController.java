@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * @ClassName SysLoginController
  * @Description TODO
@@ -26,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysLoginController {
     @Autowired
     SysUserTokenService tokenService;
-    @Autowired
+    @Resource
     SysUserMapper sysUserMapper;
 
     @PostMapping("/admin/sys/login")
@@ -48,6 +50,11 @@ public class SysLoginController {
             return Response.error(ErrorEnum.USERNAME_ALREADY_EXISTS);
         }
         tokenService.register(form);
+        return Response.getInstance();
+    }
+
+    @PostMapping("/admin/sys/logout")
+    public Response logout() {
         return Response.getInstance();
     }
 }

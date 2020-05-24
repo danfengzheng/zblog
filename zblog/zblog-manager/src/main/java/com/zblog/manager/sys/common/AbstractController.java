@@ -1,6 +1,9 @@
 package com.zblog.manager.sys.common;
 
+import com.google.common.collect.Lists;
 import com.zblog.pojo.sys.SysUser;
+
+import java.util.List;
 
 /**
  * @ClassName AbstractController
@@ -15,6 +18,8 @@ public class AbstractController {
         SysUser user = new SysUser();
         user.setUserId(1);
         user.setUsername("admin");
+        List<String> list = Lists.newArrayList();
+        list.add("admin");
         return user;
     }
 

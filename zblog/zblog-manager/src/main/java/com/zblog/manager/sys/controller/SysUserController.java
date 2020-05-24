@@ -1,5 +1,6 @@
 package com.zblog.manager.sys.controller;
 
+import com.google.common.collect.Maps;
 import com.zblog.common.base.Response;
 import com.zblog.common.utils.PageUtils;
 import com.zblog.manager.sys.common.AbstractController;
@@ -31,13 +32,17 @@ public class SysUserController extends AbstractController {
      */
     @GetMapping("/info")
     public Response info(){
-        return Response.getInstance(getUser());
+        Map<String,Object> map = Maps.newHashMap();
+        String[] s = {"admin"};
+        map.put("roles",s);
+        map.put("name","zhengdf");
+        return Response.getInstance(map);
     }
 
     /**
      * 所有用户列表
      */
-    @GetMapping("/list")
+    @GetMapping
     public Response list(UserForm form){
         //只有超级管理员，才能查看所有管理员列表
         PageUtils page = userService.queryPage(form);

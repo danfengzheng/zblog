@@ -22,7 +22,6 @@ public class BaseForm {
     private String sidx;
     /*升序降序 ASC || DESC*/
     private String order;
-    private Integer id ;
     private String[] ids;
 
     public void setLimit(int limit){

@@ -78,8 +78,8 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        name: '首页',
+        meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -129,6 +129,81 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '/article',
+    component: Layout,
+    redirect: '/article/list',
+    name: 'Example',
+    meta: {
+      title: '文章管理',
+      icon: 'article'
+    },
+    children: [
+      {
+        path: 'create',
+        component: () => import('@/views/article/create'),
+        name: 'CreateArticle',
+        meta: { title: '新增文章', icon: 'edit' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/article/edit'),
+        name: 'EditArticle',
+        meta: { title: '修改文章', noCache: true, activeMenu: '/article/list' },
+        hidden: true
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/article/list'),
+        name: 'ArticleList',
+        meta: { title: '文章列表', icon: 'list' }
+      }
+    ]
+  },
+  {
+    path: '/sys',
+    component: Layout,
+    redirect: '/sys',
+    alwaysShow: true, // will always show the root menu
+    name: 'Sys',
+    meta: {
+      title: '系统管理',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'user',
+        component: () => import('@/views/sys/user'),
+        name: 'User',
+        meta: {
+          title: '用户管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }]
+  },
+  {
+    path: '/operation',
+    component: Layout,
+    redirect: '/operation',
+    alwaysShow: true, // will always show the root menu
+    name: 'Operation',
+    meta: {
+      title: '文章配置',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'tag',
+        component: () => import('@/views/operation/tag'),
+        name: 'Tag',
+        meta: {
+          title: '标签管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }]
+  },
   {
     path: '/permission',
     component: Layout,
@@ -189,38 +264,6 @@ export const asyncRoutes = [
   chartsRouter,
   nestedRouter,
   tableRouter,
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/list',
-    name: 'Example',
-    meta: {
-      title: 'Example',
-      icon: 'example'
-    },
-    children: [
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateArticle',
-        meta: { title: 'Create Article', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditArticle',
-        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'ArticleList',
-        meta: { title: 'Article List', icon: 'list' }
-      }
-    ]
-  },
 
   {
     path: '/tab',
