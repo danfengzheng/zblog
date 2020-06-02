@@ -5,13 +5,14 @@ import com.zblog.common.base.Response;
 import com.zblog.common.utils.PageUtils;
 import com.zblog.manager.sys.common.AbstractController;
 import com.zblog.manager.sys.service.SysUserService;
+import com.zblog.pojo.sys.SysUser;
 import com.zblog.pojo.sys.form.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,8 +25,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/sys/user")
 public class SysUserController extends AbstractController {
-    @Autowired
-    SysUserService userService ;
+    final SysUserService userService ;
+
+    public SysUserController(SysUserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * 获取登录的用户信息
@@ -42,11 +46,15 @@ public class SysUserController extends AbstractController {
     /**
      * 所有用户列表
      */
-    @GetMapping
+    @GetMapping("/query")
     public Response list(UserForm form){
         //只有超级管理员，才能查看所有管理员列表
+        List<SysUser> list = userService.queryList(form);
+        return Response.getInstance(list);
+    }
+    @GetMapping
+    public Response query(UserForm form){
         PageUtils page = userService.queryPage(form);
-
         return Response.getInstance(page);
     }
 }

@@ -18,7 +18,9 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
-
+/* 增加  mavon-editor */
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -31,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
-
+Vue.use(mavonEditor)
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })

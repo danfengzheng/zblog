@@ -42,7 +42,7 @@
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
           <div class="editor-container">
-            <markdown-editor ref="markdownEditor" v-model="postForm.content" />
+            <mavon-editor ref="md" v-model="postForm.content" style="height: 500px" @imgAdd="imgAdd" />
           </div>
         </el-form-item>
 
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import MarkdownEditor from '@/components/MarkdownEditor'
+// import MarkdownEditor from '@/components/MarkdownEditor'
 import Upload from '@/components/Upload/SingleImage3'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
@@ -87,7 +87,7 @@ const content = `
 `
 export default {
   name: 'ArticleDetail',
-  components: { MDinput, Upload, Sticky, SourceUrlDropdown, MarkdownEditor },
+  components: { MDinput, Upload, Sticky, SourceUrlDropdown },
   props: {
     isEdit: {
       type: Boolean,
@@ -238,6 +238,9 @@ export default {
         if (!response.data.items) return
         this.userListOptions = response.data.items.map(v => v.name)
       })
+    },
+    imgAdd(pos, $file) {
+      console.log('文件上传-----------------------')
     }
   }
 }

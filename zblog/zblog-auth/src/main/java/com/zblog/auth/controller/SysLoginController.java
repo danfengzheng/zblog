@@ -26,10 +26,13 @@ import javax.annotation.Resource;
  **/
 @RestController
 public class SysLoginController {
-    @Autowired
-    SysUserTokenService tokenService;
+    final SysUserTokenService tokenService;
     @Resource
     SysUserMapper sysUserMapper;
+
+    public SysLoginController(SysUserTokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     @PostMapping("/admin/sys/login")
     public Response login(@RequestBody SysLoginForm form) {
