@@ -2,7 +2,7 @@
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
-      <sticky :z-index="10" :class-name="'sub-navbar '+postForm.status">
+      <sticky :class-name="'sub-navbar '+postForm.status">
         <SourceUrlDropdown v-model="postForm.source_uri" />
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
           发布
@@ -25,9 +25,7 @@
               <el-row>
                 <el-col :span="8">
                   <el-form-item label-width="60px" label="作者" class="postInfo-container-item">
-                    <el-select v-model="postForm.author" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="请输入作者">
-                      <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
-                    </el-select>
+                    <el-input v-model="postForm.author" placeholder="请输入作者" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -41,7 +39,7 @@
         </el-form-item>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <div class="editor-container">
+          <div class="editor-container" :z-index="8">
             <mavon-editor ref="md" v-model="postForm.content" style="height: 500px" @imgAdd="imgAdd" />
           </div>
         </el-form-item>

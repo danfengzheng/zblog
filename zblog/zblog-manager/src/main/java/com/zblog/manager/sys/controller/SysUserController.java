@@ -7,7 +7,6 @@ import com.zblog.manager.sys.common.AbstractController;
 import com.zblog.manager.sys.service.SysUserService;
 import com.zblog.pojo.sys.SysUser;
 import com.zblog.pojo.sys.form.UserForm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
