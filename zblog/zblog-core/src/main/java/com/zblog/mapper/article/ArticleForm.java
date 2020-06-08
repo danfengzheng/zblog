@@ -12,4 +12,13 @@ import lombok.Data;
  **/
 @Data
 public class ArticleForm extends BaseForm {
+    private String title;
+    private String blogType;
+    private String tag;
+    private String author;
+    private Integer coverType;
+    private Integer recommend;
+    private String cover;
+    private String description;
+    private String content;
 }

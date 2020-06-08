@@ -4,10 +4,7 @@ import com.zblog.common.base.Response;
 import com.zblog.manager.article.service.ArticleService;
 import com.zblog.mapper.article.ArticleForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName ArticleContorller
@@ -20,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/admin/article")
 public class ArticleController {
 
-    @Autowired
-    private ArticleService articleService;
+    private final ArticleService articleService;
+
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     @GetMapping
     public Response listArticle(ArticleForm form) {
@@ -29,7 +29,8 @@ public class ArticleController {
     }
 
     @PutMapping
-    public Response add(ArticleForm form) {
+    public Response add(@RequestBody ArticleForm form) {
+        articleService.save(form);
         return Response.getInstance();
     }
 }

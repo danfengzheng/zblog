@@ -202,6 +202,15 @@ export const asyncRoutes = [
           title: '标签管理',
           roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'category',
+        component: () => import('@/views/operation/category'),
+        name: 'Category',
+        meta: {
+          title: '分类管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
       }]
   },
   {
