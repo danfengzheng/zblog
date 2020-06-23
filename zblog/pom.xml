@@ -17,10 +17,7 @@
     <description>个人博客</description>
 
     <modules>
-        <module>zblog-auth</module>
-        <module>zblog-core</module>
         <module>zblog-manager</module>
-        <module>zblog-search</module>
         <module>zblog-common</module>
     </modules>
 
@@ -126,20 +123,7 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-
         </dependencies>
-
     </dependencyManagement>
-    <build>
-        <pluginManagement>
-            <plugins>
-                <!--添加SpringBoot插件:tomcat-->
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
 </project>
