@@ -1,13 +1,11 @@
 package com.zhengdf.module.sys.controller;
 
-import com.zhengdf.domain.sys.SysUser;
+import com.zhengdf.common.Response;
 import com.zhengdf.module.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @ClassName UserController
@@ -24,8 +22,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<SysUser> query() {
-        return userService.queryAll();
+    public Response query() {
+        return Response.getInstance(userService.queryAll());
     }
 
 }
