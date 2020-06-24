@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface UserRepository extends JpaRepository<SysUser,Long> {
+
+    SysUser findSysUserByUsernameAndStatus(String username, Integer status);
 }
