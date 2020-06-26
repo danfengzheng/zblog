@@ -9,12 +9,24 @@
       <el-row>
         <el-col :span="6">
           <el-form-item label="博文分类" prop="blogType">
-            <el-input v-model="article.blogType" placeholder="请填写博文分类" style="width: 100%" />
+            <el-cascader
+              v-model="article.blogType"
+              :options="categoryList"
+              clearable
+              placeholder="请选择博文分类"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="6">
           <el-form-item label="博文标签" prop="tag">
-            <el-input v-model="article.tag" placeholder="请填写博文标签" style="width: 100%" />
+            <el-select v-model="article.tag" placeholder="请选择博文标签">
+              <el-option
+                v-for="item in tagList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
           </el-form-item>
         </el-col>
 
@@ -36,7 +48,7 @@
         <el-col :span="12">
           <el-form-item label="展示类型">
             <el-radio-group v-model="article.recommend">
-              <el-radio class="el-radio" :value="1" :label="1">{{ article.recommend }}大图片</el-radio>
+              <el-radio class="el-radio" :value="1" :label="1">大图片</el-radio>
               <el-radio :label="2">小图片</el-radio>
               <el-radio :label="0">无图片</el-radio>
             </el-radio-group>
@@ -47,7 +59,8 @@
         <el-col :span="12">
           <el-upload
             drag
-            :action="imagesUploadApi"
+            action
+            :http-request="fileUpload"
             list-type="picture"
             :multiple="false"
             :before-upload="beforeUploadHandle"
@@ -83,12 +96,16 @@
 <script>
 import { mapGetters } from 'vuex'
 import ArticleCurd from '@/api/article/index'
+import curdCategory from '@/api/operation/category'
+import curdTag from '@/api/operation/tag'
 export default {
   name: 'Markdown',
   data() {
     return {
       height: document.documentElement.clientHeight - 200 + 'px',
       file: [],
+      categoryList: [],
+      tagList: [],
       uri: '',
       loading: false,
       article: {
@@ -115,6 +132,15 @@ export default {
     ...mapGetters([
       'imagesUploadApi'
     ])
+  },
+  created() {
+    curdCategory.getTree().then(rest => {
+      this.categoryList = rest
+    })
+    curdTag.getTree().then(rest => {
+      console.log(rest)
+      this.tagList = rest
+    })
   },
   mounted() {
     const that = this
@@ -146,6 +172,11 @@ export default {
           console.log('表单验证不通过！！')
           return false
         }
+      })
+    },
+    fileUpload(file) {
+      ArticleCurd.upload(file).then(res => {
+        console.log(res)
       })
     }
   }

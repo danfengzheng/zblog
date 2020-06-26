@@ -56,6 +56,11 @@ public class TokenUtil {
         } catch (Exception e){
             return false;
         }
+    }
 
+    public static String getUsername(String token){
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET)).withIssuer("auth0").build();
+        DecodedJWT jwt = verifier.verify(token);
+        return jwt.getClaim("username").asString();
     }
 }

@@ -6,16 +6,17 @@
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" />
     <div class="app-container">
       <div class="app-table">
-        <el-table border width="100%" :data="data" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id">
+        <el-table v-loading="listLoading" border width="100%" :data="list" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="value">
           <el-table-column
-            prop="id"
+            prop="label"
             header-align="center"
             width="150"
-            label="ID"
+            label="名称"
           />
-          <el-table-column prop="pId" label="父ID" />
-          <el-table-column prop="name" label="姓名" />
+          <el-table-column prop="type" :formatter="formatType" label="类型" />
+          <el-table-column prop="rank" :formatter="formatRankType" label="级别" />
         </el-table>
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.currPage" :limit.sync="listQuery.limit" @pagination="getList" />
       </div>
     </div>
   </div>
@@ -23,33 +24,49 @@
 
 <script>
 import AddOrUpdate from './category'
+import curdCategory from '@/api/operation/category'
 export default {
   name: 'Category', components: { AddOrUpdate },
   data() {
     return {
+      tagType: { 0: '文章', 1: '图书' },
+      rankType: { 0: '一级', 1: '二级', 2: '三级' },
       addOrUpdateVisible: false,
-      data: [
-        {
-          'id': 1,
-          'pId': 0,
-          'name': '郑单峰',
-          'children': [
-            {
-              'id': 2,
-              'pId': 1,
-              'name': '张三'
-            }
-          ]
-        }
-      ]
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        currPage: 1,
+        limit: 10
+      }
     }
   },
+  created() {
+    this.getList()
+  },
   methods: {
+    getList() {
+      this.listLoading = true
+      curdCategory.query(this.listQuery).then(rest => {
+        this.list = rest.list
+        this.total = rest.totalCount
+        this.listLoading = false
+      }).catch(error => {
+        console.log(error)
+        this.listLoading = false
+      })
+    },
     addOrUpdateHandle() {
       this.addOrUpdateVisible = true
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init()
       })
+    },
+    formatType(row) {
+      return this.tagType[row.type]
+    },
+    formatRankType(row) {
+      return this.rankType[row.type]
     }
   }
 }

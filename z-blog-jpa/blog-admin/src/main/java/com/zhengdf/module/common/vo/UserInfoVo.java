@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName UserInfoVo
@@ -32,4 +34,6 @@ public class UserInfoVo {
 
     @JsonIgnore
     private Integer status = 1;
+
+    private List<String> roles = new ArrayList<>();
 }

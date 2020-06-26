@@ -24,4 +24,8 @@ public class UserService {
     public List<SysUser> queryAll(){
         return userRepository.findAll();
     }
+
+    public SysUser findByUsername(String username){
+        return userRepository.findSysUserByUsernameAndStatus(username,1);
+    }
 }

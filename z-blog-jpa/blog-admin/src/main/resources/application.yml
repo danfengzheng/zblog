@@ -5,7 +5,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   datasource:
     url: jdbc:mysql://47.92.251.247:8089/z-blog-jpa?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
     username: root
@@ -35,3 +35,8 @@ spring:
       wall:
         config:
           multi-statement-allow: true
+
+
+file:
+  base:
+    director: H:\img

@@ -13,7 +13,7 @@ public class BaseForm {
     /**
      * 当前页码
      */
-    private long currPage=1;
+    private int currPage=1;
     /**
      * 每页条数
      */
@@ -27,6 +27,13 @@ public class BaseForm {
     public void setLimit(int limit){
         if(limit>10){
             this.limit = limit;
+        }
+    }
+    public int getCurrPage(){
+        if(currPage>0){
+            return currPage -1 ;
+        }else {
+            return 0;
         }
     }
 }
