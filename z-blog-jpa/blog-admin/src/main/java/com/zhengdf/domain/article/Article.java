@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @ClassName Article
@@ -54,6 +55,8 @@ public class Article implements Serializable {
     /*是否置顶*/
     private Boolean top;
 
+    @OneToMany(targetEntity = TagLink.class,cascade = CascadeType.ALL, mappedBy = "linkId")
+    private List<TagLink> tagList;
 
     /**
      * 创建时间

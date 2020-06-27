@@ -42,6 +42,7 @@ public class ArticleForm implements Serializable {
 
     /*分类类别*/
     private Integer[] categoryArr;
+    private Long[] tagArr;
 
     /*发布状态*/
     private Boolean publish;

@@ -3,6 +3,7 @@ package com.zhengdf.module.article.service;
 import com.alibaba.fastjson.JSONObject;
 import com.zhengdf.common.BaseForm;
 import com.zhengdf.domain.article.Article;
+import com.zhengdf.domain.article.TagLink;
 import com.zhengdf.module.article.dto.ArticleForm;
 import com.zhengdf.module.article.repository.ArticleRepository;
 import com.zhengdf.util.PageUtils;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,6 +33,8 @@ import java.time.LocalDateTime;
 public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private TagLinkService tagLinkService;
 
     public PageUtils query(BaseForm form){
         Pageable pageable = PageRequest.of(form.getCurrPage(),form.getLimit());
@@ -44,11 +49,7 @@ public class ArticleService {
         article.setCategoryId(StringUtils.join(form.getCategoryArr(),","));
         article.setCreateTime(LocalDateTime.now());
         article.setUpdateTime(LocalDateTime.now());
-        articleRepository.save(article);
-    }
-
-    public static void main(String[] args) {
-        Integer[] s = {1,23,45};
-        System.out.println(JSONObject.toJSONString(s));
+        Article newArticle = articleRepository.save(article);
+        tagLinkService.buildArticleTag(newArticle.getId(),form.getTagArr(),0);
     }
 }

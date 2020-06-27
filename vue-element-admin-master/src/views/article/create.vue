@@ -18,8 +18,8 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="博文标签" prop="tag">
-            <el-select v-model="article.tag" placeholder="请选择博文标签">
+          <el-form-item label="博文标签" prop="tagArr">
+            <el-select v-model="article.tagArr" multiple placeholder="请选择博文标签">
               <el-option
                 v-for="item in tagList"
                 :key="item.id"
@@ -126,7 +126,7 @@ export default {
         categoryArr: [
           { required: true, message: '请选择类型', trigger: blur }
         ],
-        tag: [
+        tagArr: [
           { required: true, message: '请选择标签', trigger: blur }
         ],
         author: [
