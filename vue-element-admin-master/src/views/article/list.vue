@@ -4,7 +4,11 @@
       <el-table-column align="center" prop="id" label="标号" width="80" />
       <el-table-column label="标题" prop="title" width="120px" align="center" />
       <el-table-column label="作者" prop="author" width="120px" align="center" />
-      <el-table-column label="分类" prop="categoryId" width="120px" align="center" />
+      <el-table-column label="分类" prop="categoryId" width="320px" align="center">
+        <template slot-scope="scope">
+          <article-category :data-str="scope.row.categoryId" :all-list="categoryList" :disabled="true" />
+        </template>
+      </el-table-column>
       <el-table-column label="标签" prop="author" width="120px" align="center" />
       <el-table-column label="浏览" prop="readNum" width="120px" align="center" />
       <el-table-column label="喜欢" prop="likeNum" width="120px" align="center" />
@@ -54,10 +58,12 @@
 <script>
 import ArticleCurd from '@/api/article/index'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import curdCategory from '@/api/operation/category'
+import ArticleCategory from './components/Category'
 
 export default {
   name: 'ArticleList',
-  components: { Pagination },
+  components: { Pagination, ArticleCategory },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -72,6 +78,7 @@ export default {
     return {
       list: null,
       total: 0,
+      categoryList: [],
       listLoading: true,
       listQuery: {
         page: 1,
@@ -81,6 +88,9 @@ export default {
   },
   created() {
     this.getList()
+    curdCategory.getTree().then(rest => {
+      this.categoryList = rest
+    })
   },
   methods: {
     getList() {
@@ -93,6 +103,10 @@ export default {
     },
     changeTop() {
       console.log(`调整置顶`)
+    },
+    categoryStr(data) {
+      const categoreStr = ''
+      return categoreStr
     }
   }
 }

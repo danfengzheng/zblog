@@ -8,9 +8,9 @@
       </el-form-item>
       <el-row>
         <el-col :span="6">
-          <el-form-item label="博文分类" prop="blogType">
+          <el-form-item label="博文分类" prop="categoryArr">
             <el-cascader
-              v-model="article.blogType"
+              v-model="article.categoryArr"
               :options="categoryList"
               clearable
               placeholder="请选择博文分类"
@@ -59,12 +59,13 @@
         <el-col :span="12">
           <el-upload
             drag
-            action
-            :http-request="fileUpload"
+            :action="imagesUploadApi"
+            :headers="headers"
+            :limit="1"
             list-type="picture"
             :multiple="false"
             :before-upload="beforeUploadHandle"
-            :file-list="file"
+            :file-list="fileList"
             :on-remove="handleRemove"
             :on-success="successHandle"
           >
@@ -98,25 +99,31 @@ import { mapGetters } from 'vuex'
 import ArticleCurd from '@/api/article/index'
 import curdCategory from '@/api/operation/category'
 import curdTag from '@/api/operation/tag'
+import { getToken } from '@/utils/auth'
 export default {
   name: 'Markdown',
   data() {
     return {
+      headers: {
+        // 从cookie里获取token，并赋值  Authorization ，而不是token
+        Authorization: getToken()
+      },
       height: document.documentElement.clientHeight - 200 + 'px',
-      file: [],
+      fileList: [],
       categoryList: [],
       tagList: [],
       uri: '',
       loading: false,
       article: {
         coverType: 0,
-        recommend: 0
+        recommend: 0,
+        categoryArr: []
       },
       rule: {
         title: [
           { required: true, message: '请输入标题', trigger: blur }
         ],
-        blogType: [
+        categoryArr: [
           { required: true, message: '请选择类型', trigger: blur }
         ],
         tag: [
@@ -149,7 +156,8 @@ export default {
     }
   },
   methods: {
-    successHandle() {
+    successHandle(file) {
+      console.log(file)
       console.log('上传成功')
     },
     handleRemove() {
@@ -167,6 +175,7 @@ export default {
     subArticle() {
       this.$refs.article.validate(valid => {
         if (valid) {
+          this.article.files = this.fileList
           ArticleCurd.add(this.article)
         } else {
           console.log('表单验证不通过！！')
